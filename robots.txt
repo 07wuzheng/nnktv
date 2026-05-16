@@ -1,0 +1,55 @@
+# robots.txt — 南宁KTV 信息平台
+# 允许所有搜索引擎抓取
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# 百度蜘蛛优化
+User-agent: Baiduspider
+Allow: /
+Disallow: /api/
+Crawl-delay: 1
+
+# Google 蜘蛛优化
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Crawl-delay: 0
+
+# 360 搜索
+User-agent: 360Spider
+Allow: /
+Disallow: /api/
+Crawl-delay: 1
+
+# 搜狗蜘蛛
+User-agent: Sogou web spider
+Allow: /
+Disallow: /api/
+Crawl-delay: 1
+
+# 神马蜘蛛（移动搜索）
+User-agent: YisouSpider
+Allow: /
+Disallow: /api/
+Crawl-delay: 1
+
+# AI 爬虫（允许抓取以提升 AI 搜索可见性）
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Sitemap 地址
+Sitemap: https://www.nanningktv.com/sitemap.xml
