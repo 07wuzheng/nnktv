@@ -37,9 +37,9 @@ function escapeHtml(str) {
 }
 
 var DISTRICT_MAP = {
-    youxi:           { name: '游戏' },
-    shangwu:         { name: '商务' },
-    gaoduanliangfan: { name: '高端量贩' },
+    youxi:           { name: '游戏场' },
+    shangwu:         { name: '商务场' },
+    gaoduanliangfan: { name: '高端量贩场' },
     huachang:        { name: '花场' }
 };
 
@@ -100,7 +100,7 @@ var RECOMMEND_COUNT = 5;     // 推荐列表固定展示条数
 // ==========================================
 
 function fetchDetail(id, district) {
-    var districtName = DISTRICT_MAP[district] ? DISTRICT_MAP[district].name : '游戏';
+    var districtName = DISTRICT_MAP[district] ? DISTRICT_MAP[district].name : '游戏场';
     return Promise.resolve({
         id: id || '1',
         title: districtName + ' XX 娱乐场所（' + (id || '1') + '号店）',
@@ -115,7 +115,7 @@ function fetchDetail(id, district) {
 }
 
 function fetchRecommend(district, excludeId) {
-    var districtName = DISTRICT_MAP[district] ? DISTRICT_MAP[district].name : '游戏';
+    var districtName = DISTRICT_MAP[district] ? DISTRICT_MAP[district].name : '游戏场';
     var list = [];
     var count = 0;
     for (var i = 1; i <= 12 && count < RECOMMEND_COUNT; i++) {
@@ -178,8 +178,8 @@ function renderDetail(data) {
 }
 
 function updateSEOMeta(data, districtName) {
-    var title = (data.title || 'xx') + ' - 南宁KTV推荐_包厢预订_南宁商务KTV';
-    var desc = (data.title || 'xx') + ' 南宁商务KTV，包厢环境、套餐价格、用户评价与预订电话一目了然。查看详情并在线预约。电话：19968122123。';
+    var title = (data.title || 'xx') + ' - 南宁KTV推荐_包厢预订_南宁商务场KTV';
+    var desc = (data.title || 'xx') + ' 南宁商务场KTV，包厢环境、套餐价格、用户评价与预订电话一目了然。查看详情并在线预约。电话：19968122123。';
     var canonical = 'https://www.nanningktv.com/detail.html?district=' + (data.district || 'youxi') + '&id=' + (data.id || '1');
 
     document.title = title;

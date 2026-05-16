@@ -72,9 +72,9 @@ function getQueryParam(key) {
 function fetchArticleDetail(id) {
     var mockData = {
         id: id || 1,
-        title: '南宁游戏KTV新开业优惠活动',
-        seo_keywords: '南宁KTV,游戏KTV,优惠活动,南宁唱歌',
-        content: '<p>南宁游戏KTV近日新开业了一家高端KTV娱乐场所，为市民带来了全新的唱歌体验。该KTV位于南宁核心商圈，交通便利，设施齐全。</p>' +
+        title: '南宁游戏场KTV新开业优惠活动',
+        seo_keywords: '南宁KTV,游戏场KTV,优惠活动,南宁唱歌',
+        content: '<p>南宁游戏场KTV近日新开业了一家高端KTV娱乐场所，为市民带来了全新的唱歌体验。该KTV位于南宁核心商圈，交通便利，设施齐全。</p>' +
             '<p>开业期间推出多项优惠活动，包括包厢折扣、欢唱套餐、会员充值返现等。广大市民可拨打预订热线咨询详情。</p>' +
             '<p>南宁KTV信息平台将持续更新南宁四大分区的KTV行业动态，为您提供最全面的KTV资讯服务。</p>' +
             '<p>更多南宁KTV信息，请访问我们的网站或关注微信公众号"南宁KTV"。</p>',

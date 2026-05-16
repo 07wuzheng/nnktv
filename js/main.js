@@ -12,7 +12,7 @@
  * 内联工具函数：escapeHtml / fetchJSON / DISTRICT_MAP / 汉堡菜单
  * ========================================== */
 
-// 四大分区：游戏 / 商务 / 高端量贩 / 花场
+// 四大分区：游戏场 / 商务场 / 高端量贩场 / 花场
 
 // --- 内联工具函数（原 common.js，已还原为各文件独立副本）---
 document.documentElement.classList.remove('no-js');
@@ -106,9 +106,9 @@ function escapeHtml(str) {
 }
 
 var DISTRICT_MAP = {
-    youxi:           { name: '游戏' },
-    shangwu:         { name: '商务' },
-    gaoduanliangfan: { name: '高端量贩' },
+    youxi:           { name: '游戏场' },
+    shangwu:         { name: '商务场' },
+    gaoduanliangfan: { name: '高端量贩场' },
     huachang:        { name: '花场' }
 };
 
@@ -267,13 +267,13 @@ function fetchFeaturedStores() {
     // 模拟数据：4 个分区各 1-2 家门店，共 8 家
     // 排序逻辑：按每个分区最新上传的门店优先展示（create_time DESC）
     var mockList = [
-        { id: '1', name: 'xx', district: 'youxi',           address: '南宁市游戏区xx路xx号', cover: '', create_time: '2026-05-14 10:00:00' },
-        { id: '2', name: 'xx', district: 'youxi',           address: '南宁市游戏区xx路xx号', cover: '', create_time: '2026-05-13 14:30:00' },
-        { id: '3', name: 'xx', district: 'shangwu',         address: '南宁市商务区xx路xx号', cover: '', create_time: '2026-05-13 09:00:00' },
-        { id: '4', name: 'xx', district: 'gaoduanliangfan', address: '南宁市高端量贩区xx路xx号', cover: '', create_time: '2026-05-12 16:00:00' },
-        { id: '5', name: 'xx', district: 'gaoduanliangfan', address: '南宁市高端量贩区xx路xx号', cover: '', create_time: '2026-05-12 10:00:00' },
+        { id: '1', name: 'xx', district: 'youxi',           address: '南宁市游戏场区xx路xx号', cover: '', create_time: '2026-05-14 10:00:00' },
+        { id: '2', name: 'xx', district: 'youxi',           address: '南宁市游戏场区xx路xx号', cover: '', create_time: '2026-05-13 14:30:00' },
+        { id: '3', name: 'xx', district: 'shangwu',         address: '南宁市商务场区xx路xx号', cover: '', create_time: '2026-05-13 09:00:00' },
+        { id: '4', name: 'xx', district: 'gaoduanliangfan', address: '南宁市高端量贩场区xx路xx号', cover: '', create_time: '2026-05-12 16:00:00' },
+        { id: '5', name: 'xx', district: 'gaoduanliangfan', address: '南宁市高端量贩场区xx路xx号', cover: '', create_time: '2026-05-12 10:00:00' },
         { id: '6', name: 'xx', district: 'huachang',        address: '南宁市花场区xx路xx号', cover: '', create_time: '2026-05-11 15:00:00' },
-        { id: '7', name: 'xx', district: 'shangwu',         address: '南宁市商务区xx路xx号', cover: '', create_time: '2026-05-11 09:00:00' },
+        { id: '7', name: 'xx', district: 'shangwu',         address: '南宁市商务场区xx路xx号', cover: '', create_time: '2026-05-11 09:00:00' },
         { id: '8', name: 'xx', district: 'huachang',        address: '南宁市花场区xx路xx号', cover: '', create_time: '2026-05-10 14:00:00' }
     ];
     return Promise.resolve({ code: 200, data: { list: mockList } });
@@ -345,9 +345,9 @@ function fetchArticles() {
     // return fetchJSON('/api/articles?type=news&limit=3');
 
     var mockList = [
-        { id: 1, title: '南宁游戏KTV新开业优惠活动', thumbnail: '', seo_keywords: '南宁KTV,游戏KTV,优惠活动', author: '南宁KTV', create_time: '2026-05-10 14:30:00', update_time: '2026-05-10 14:30:00', status: 1 },
+        { id: 1, title: '南宁游戏场KTV新开业优惠活动', thumbnail: '', seo_keywords: '南宁KTV,游戏场KTV,优惠活动', author: '南宁KTV', create_time: '2026-05-10 14:30:00', update_time: '2026-05-10 14:30:00', status: 1 },
         { id: 2, title: '南宁KTV预订攻略：四大分区全覆盖', thumbnail: '', seo_keywords: '南宁KTV预订,KTV攻略', author: '南宁KTV', create_time: '2026-05-09 10:00:00', update_time: '2026-05-09 10:00:00', status: 1 },
-        { id: 3, title: '南宁高端量贩KTV排行榜发布', thumbnail: '', seo_keywords: '高端量贩KTV,KTV排行', author: '南宁KTV', create_time: '2026-05-08 16:20:00', update_time: '2026-05-08 16:20:00', status: 1 }
+        { id: 3, title: '南宁高端量贩场KTV排行榜发布', thumbnail: '', seo_keywords: '高端量贩场KTV,KTV排行', author: '南宁KTV', create_time: '2026-05-08 16:20:00', update_time: '2026-05-08 16:20:00', status: 1 }
     ];
     return Promise.resolve({ list: mockList });
 }

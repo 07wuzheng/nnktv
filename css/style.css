@@ -158,19 +158,26 @@ input {
     height: 28px;
     border: none;
     background: transparent;
-    color: var(--color-text-muted);
-    font-size: 1rem;
+    color: #00F3FF;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    transition: all var(--transition);
+    padding: 4px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 5px rgba(0, 243, 255, 0.5));
+    outline: none;
 }
 
 .header-search .header-search-btn:hover {
-    color: var(--color-primary);
-    background: rgba(212, 168, 83, 0.08);
+    color: #FF00FF;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.8));
+    transform: translateY(-50%) scale(1.15) rotate(5deg);
+}
+
+.header-search .header-search-btn:active {
+    transform: translateY(-50%) scale(0.95);
 }
 
 /* 搜索结果下拉 */
@@ -709,18 +716,51 @@ input {
     height: 40px;
     border-radius: 50%;
     border: none;
-    background: var(--color-primary);
-    color: var(--color-bg);
-    font-size: 1.1rem;
+    background: transparent;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background var(--transition);
+    padding: 8px;
+    color: #00F3FF;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 5px rgba(0, 243, 255, 0.5));
+    outline: none;
 }
 
 .search-bar-wrap .header-search-btn:hover {
-    background: var(--color-primary-dark);
+    color: #FF00FF;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.8));
+    transform: translateY(-50%) scale(1.15) rotate(5deg);
+}
+
+.search-bar-wrap .header-search-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* 搜索图标按钮 — 霓虹发光 */
+.icon-only-search {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #00F3FF;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 5px rgba(0, 243, 255, 0.5));
+    outline: none;
+}
+
+.icon-only-search:hover {
+    color: #FF00FF;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.8));
+    transform: scale(1.15) rotate(5deg);
+}
+
+.icon-only-search:active {
+    transform: scale(0.95);
 }
 
 .search-bar-wrap .header-search-results {
@@ -1429,7 +1469,14 @@ input {
     .search-bar-wrap .header-search-btn {
         width: 36px;
         height: 36px;
-        font-size: 0.95rem;
+    }
+
+    .search-bar-wrap .header-search-btn:hover {
+        transform: translateY(-50%) scale(1.15) rotate(5deg);
+    }
+
+    .search-bar-wrap .header-search-btn:active {
+        transform: translateY(-50%) scale(0.95);
     }
 
     .nav-desktop {
