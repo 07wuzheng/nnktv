@@ -6,6 +6,9 @@
 (function() {
     'use strict';
 
+    // ===== API 配置（后端对接：部署时只需修改此处，所有接口请求会自动拼接）=====
+    var API_BASE = '';  // 留空 = 相对路径；生产环境可设为 'https://api.nanningktv.com' 等
+
     // ==========================================
     // 搜索数据源（后期替换为真实API）
     // 优先级：KTV地址 > 资讯信息
@@ -16,6 +19,11 @@
         gaoduanliangfan: { name: '高端量贩场' },
         huachang:        { name: '花场' }
     };
+
+    // TODO: 后端对接 — 以下硬编码数据全部替换为 API 调用
+    // 真实接口：GET /api/search?q=关键词
+    // 返回格式：{ "code": 200, "data": [{ "type":"ktv"/"article", "typeName":"KTV门店"/"资讯", "title":"", "desc":"", "url":"", "keywords":"" }] }
+    // 启用方式：将 search() 函数内的本地搜索替换为 fetchJSON(API_BASE + '/api/search?q=' + encodeURIComponent(query))
 
     // KTV门店数据（高优先级）
     var ktvData = [];
@@ -175,11 +183,118 @@
         });
     }
 
+    // ==========================================
+    // 移动端搜索弹窗
+    // ==========================================
+    function initSearchPopup() {
+        var overlay = document.getElementById('searchPopupOverlay');
+        var openBtns = document.querySelectorAll('.bottom-nav-search-btn');
+        var popupInput = document.querySelector('.search-popup-input');
+        var popupBtn = document.querySelector('.search-popup-btn');
+        var popupResults = document.querySelector('.search-popup-results');
+
+        if (!overlay || !popupInput || !popupResults) return;
+
+        var debounceTimer = null;
+
+        function openPopup() {
+            overlay.classList.add('show');
+            setTimeout(function() {
+                popupInput.focus();
+            }, 100);
+        }
+
+        function closePopup() {
+            overlay.classList.remove('show');
+            popupInput.value = '';
+            popupResults.classList.remove('show');
+            popupResults.innerHTML = '';
+        }
+
+        function doPopupSearch() {
+            var query = popupInput.value.trim();
+            if (query.length === 0) {
+                popupResults.classList.remove('show');
+                popupResults.innerHTML = '';
+                return;
+            }
+            var results = search(query);
+            if (results.length === 0) {
+                popupResults.innerHTML = '<div class="search-empty">未找到相关结果</div>';
+            } else {
+                var html = '';
+                results.forEach(function(item) {
+                    html += '<a href="' + escapeHtml(item.url) + '" class="search-result-item" rel="nofollow">';
+                    html += '<div class="result-type">' + escapeHtml(item.typeName) + '</div>';
+                    html += '<div class="result-title">' + escapeHtml(item.title) + '</div>';
+                    html += '<div class="result-desc">' + escapeHtml(item.desc) + '</div>';
+                    html += '</a>';
+                });
+                popupResults.innerHTML = html;
+            }
+            popupResults.classList.add('show');
+        }
+
+        // 底部导航搜索按钮打开弹窗
+        openBtns.forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openPopup();
+            });
+        });
+
+        // 点击搜索弹窗背景（.search-popup-wrap 外部）关闭弹窗
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                closePopup();
+            }
+        });
+
+        // 弹窗内搜索输入
+        popupInput.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(doPopupSearch, 300);
+        });
+
+        popupInput.addEventListener('focus', function() {
+            if (popupInput.value.trim().length > 0) {
+                doPopupSearch();
+            }
+        });
+
+        popupBtn.addEventListener('click', function() {
+            doPopupSearch();
+        });
+
+        popupInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                doPopupSearch();
+            }
+            if (e.key === 'Escape') {
+                closePopup();
+            }
+        });
+
+        // 点击搜索结果链接后关闭弹窗
+        popupResults.addEventListener('click', function(e) {
+            var link = e.target.closest('a.search-result-item');
+            if (link) {
+                closePopup();
+            }
+        });
+    }
+
     // DOM就绪后初始化
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSearch);
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch();
+            initSearchPopup();
+        });
     } else {
         initSearch();
+        initSearchPopup();
     }
 })();
 

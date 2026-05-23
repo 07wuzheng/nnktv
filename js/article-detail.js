@@ -9,8 +9,10 @@
  * 内联工具函数：escapeHtml / getQueryParam / 汉堡菜单
  */
 
+// ===== API 配置（后端对接：部署时只需修改此处，所有接口请求会自动拼接）=====
+var API_BASE = '';  // 留空 = 相对路径；生产环境可设为 'https://api.nanningktv.com' 等
+
 // --- 内联工具函数（原 common.js，已还原为各文件独立副本）---
-document.documentElement.classList.remove('no-js');
 
 // 5/14修复：页面切换90%显示bug
 if ('scrollRestoration' in history) {
@@ -33,25 +35,7 @@ function getQueryParam(key) {
     return params.get(key);
 }
 
-// 汉堡菜单（已由底部导航栏替代，保留无障碍兜底）
-(function() {
-    var hamburger = document.getElementById('hamburger');
-    var navMobile = document.getElementById('navMobile');
-    if (hamburger && navMobile) {
-        hamburger.addEventListener('click', function() {
-            var isOpen = navMobile.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
-        navMobile.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                navMobile.classList.remove('active');
-                hamburger.classList.remove('active');
-                hamburger.setAttribute('aria-expanded', 'false');
-            });
-        });
-    }
-})();
+
 
 // 底部导航栏高亮（移动端）
 (function() {
@@ -66,10 +50,13 @@ function getQueryParam(key) {
 })();
 
 // ==========================================
-// 数据模拟（TODO: 接入真实 API，替换下方静态数据）
+// 数据模拟（TODO: 后端对接 — 取消注释并删除 mock 数据即可）
 // ==========================================
 
 function fetchArticleDetail(id) {
+    // TODO: 后端对接 — 取消下行注释，删除下方 mock 数据
+    // return fetchJSON(API_BASE + '/api/articles/detail?id=' + id);
+
     var mockData = {
         id: id || 1,
         title: '南宁游戏场KTV新开业优惠活动',
@@ -152,6 +139,14 @@ function updateSEOMeta(data) {
     var linkCanonical = document.querySelector('link[rel="canonical"]');
     if (linkCanonical) linkCanonical.setAttribute('href', canonical);
 
+    // hreflang 动态同步
+    var hreflangs = document.querySelectorAll('link[rel="alternate"][hreflang]');
+    hreflangs.forEach(function(link) {
+        if (link.getAttribute('hreflang') === 'zh-CN' || link.getAttribute('hreflang') === 'x-default') {
+            link.setAttribute('href', canonical);
+        }
+    });
+
     var ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) ogTitle.setAttribute('content', title);
 
@@ -166,11 +161,29 @@ function updateSEOMeta(data) {
         if (ogImage) ogImage.setAttribute('content', data.thumbnail);
     }
 
+    // 动态更新 article:published_time / article:modified_time
+    if (data.create_time) {
+        var pubTime = document.querySelector('meta[property="article:published_time"]');
+        if (pubTime) pubTime.setAttribute('content', data.create_time);
+    }
+    if (data.update_time) {
+        var modTime = document.querySelector('meta[property="article:modified_time"]');
+        if (modTime) modTime.setAttribute('content', data.update_time);
+    }
+    if (data.author) {
+        var artAuthor = document.querySelector('meta[property="article:author"]');
+        if (artAuthor) artAuthor.setAttribute('content', data.author);
+    }
+
     var twTitle = document.querySelector('meta[name="twitter:title"]');
     if (twTitle) twTitle.setAttribute('content', title);
 
     var twDesc = document.querySelector('meta[name="twitter:description"]');
     if (twDesc) twDesc.setAttribute('content', desc);
+
+    // og:image:alt 动态同步
+    var ogImageAlt = document.querySelector('meta[property="og:image:alt"]');
+    if (ogImageAlt) ogImageAlt.setAttribute('content', (data.title || '南宁KTV资讯') + ' — 文章详情');
 
     var ldScript = document.getElementById('jsonld-article');
     if (ldScript) {
@@ -178,7 +191,7 @@ function updateSEOMeta(data) {
             '@context': 'https://schema.org',
             '@type': 'Article',
             'headline': data.title || '文章详情',
-            'image': data.thumbnail || 'https://www.nanningktv.com/og-image.jpg',
+            'image': data.thumbnail || 'https://www.nanningktv.com/img/lbt.jpg',
             'author': { '@type': 'Person', 'name': data.author || '南宁KTV' },
             'datePublished': data.create_time || '',
             'dateModified': data.update_time || '',
@@ -188,10 +201,14 @@ function updateSEOMeta(data) {
                 'url': 'https://www.nanningktv.com',
                 'logo': {
                     '@type': 'ImageObject',
-                    'url': 'https://www.nanningktv.com/og-image.jpg'
+                    'url': 'https://www.nanningktv.com/img/lbt.jpg'
                 }
             },
-            'url': canonical
+            'url': canonical,
+            'mainEntityOfPage': {
+                '@type': 'WebPage',
+                '@id': canonical
+            }
         };
         ldScript.textContent = JSON.stringify(ldData);
     }

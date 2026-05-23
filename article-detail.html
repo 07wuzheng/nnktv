@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN" class="no-js">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
@@ -15,6 +15,10 @@
     <meta name="author" content="南宁KTV">
     <meta name="theme-color" content="#1a1a2e">
     <meta name="format-detection" content="telephone=yes">
+    <meta name="geo.region" content="CN-GX">
+    <meta name="geo.placename" content="南宁市">
+    <meta name="geo.position" content="22.817;108.367">
+    <meta name="ICBM" content="22.817, 108.367">
 
     <!-- Open Graph -->
     <meta property="og:title" content="南宁KTV资讯详情">
@@ -23,9 +27,26 @@
     <meta property="og:url" content="https://www.nanningktv.com/article-detail.html?id=1">
     <meta property="og:locale" content="zh_CN">
     <meta property="og:site_name" content="南宁KTV">
-    <meta property="og:image" content="https://www.nanningktv.com/og-image.jpg">
+    <meta property="og:image" content="https://www.nanningktv.com/img/lbt.jpg">
+    <meta property="og:image:secure_url" content="https://www.nanningktv.com/img/lbt.jpg">
+    <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="南宁KTV资讯详情">
+
+    <!-- Article 发布时间（JS动态更新） -->
+    <meta property="article:published_time" content="2026-05-16T00:00:00+08:00">
+    <meta property="article:modified_time" content="2026-05-16T00:00:00+08:00">
+    <meta property="article:author" content="南宁KTV">
+    <meta property="article:section" content="KTV资讯">
+    <meta property="article:tag" content="南宁KTV资讯">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://www.nanningktv.com">
+    <link rel="dns-prefetch" href="https://www.nanningktv.com">
+
+    <!-- Google Search Console placeholder -->
+    <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://www.nanningktv.com/article-detail.html?id=1">
@@ -36,9 +57,10 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
+
     <meta name="twitter:title" content="南宁KTV资讯详情">
     <meta name="twitter:description" content="南宁KTV资讯详情，了解南宁KTV最新动态、优惠活动与行业趋势。">
-    <meta name="twitter:image" content="https://www.nanningktv.com/og-image.jpg">
+    <meta name="twitter:image" content="https://www.nanningktv.com/img/lbt.jpg">
 
     <!-- 结构化数据 - Article -->
     <script type="application/ld+json" id="jsonld-article">
@@ -46,7 +68,7 @@
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": "文章标题",
-        "image": "https://www.nanningktv.com/og-image.jpg",
+        "image": "https://www.nanningktv.com/img/lbt.jpg",
         "author": { "@type": "Person", "name": "南宁KTV" },
         "datePublished": "2026-01-01T00:00:00+08:00",
         "dateModified": "2026-01-01T00:00:00+08:00",
@@ -56,10 +78,14 @@
             "url": "https://www.nanningktv.com",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://www.nanningktv.com/og-image.jpg"
+                "url": "https://www.nanningktv.com/img/lbt.jpg"
             }
         },
-        "url": "https://www.nanningktv.com/article-detail.html?id=1"
+        "url": "https://www.nanningktv.com/article-detail.html?id=1",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://www.nanningktv.com/article-detail.html?id=1"
+        }
     }
     </script>
 
@@ -106,12 +132,13 @@
     }
     </script>
 
+
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>★</text></svg>">
-    <link rel="alternate icon" href="favicon.ico" type="image/x-icon">
 
-    <!-- Sitemap 引导搜索引擎抓取 -->
-    <link rel="sitemap" type="application/xml" href="sitemap.xml">
+
+
 </head>
 <body>
 
@@ -126,45 +153,23 @@
          =========================================== -->
     <header class="header" id="header">
         <div class="container">
-            <a href="index.html" class="logo" aria-label="南宁商务场KTV首页">南宁商务场KTV</a>
+            <a href="index.html" class="logo" aria-label="南宁商务KTV首页">南宁商务KTV</a>
             <nav class="nav-desktop" aria-label="主导航">
                 <ul>
                     <li><a href="index.html" title="南宁KTV首页">首页</a></li>
-                    <li><a href="index.html#ktv-list" title="南宁KTV门店推荐">南宁KTV</a></li>
+                    <li><a href="index.html#section-title" title="南宁KTV门店推荐">南宁KTV</a></li>
                     <li><a href="articles.html" title="南宁KTV行业资讯动态">最新资讯</a></li>
-                    <li><a href="lianxiwomen.html" title="联系南宁KTV">联系我们</a></li>
+                    <li><a href="lianxiwomen.html" title="关于南宁KTV">关于我们</a></li>
                     <li><a href="partnership.html" title="南宁KTV商家合作热线">合作热线</a></li>
+                    <li><a href="recruitment.html" title="南宁KTV招聘">招聘</a></li>
                 </ul>
             </nav>
-
-            <!-- 搜索栏 -->
-            <div class="header-search" role="search">
-                <input type="search" class="header-search-input" placeholder="搜索KTV、资讯..." aria-label="搜索南宁KTV信息">
-                <button type="button" class="header-search-btn icon-only-search" aria-label="打开搜索" title="搜索">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" role="img">
-                        <title>搜索</title>
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
-                <div class="header-search-results" aria-live="polite"></div>
-            </div>
 
             <a href="tel:+8619968122123" class="header-phone" aria-label="拨打预订热线：199-6812-2123" title="联系我们"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img"><title>电话图标</title><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg><span class="phone-number">199-6812-2123</span></a>
         </div>
     </header>
 
-    <!-- 移动端导航 -->
-    <nav class="nav-mobile" id="navMobile" aria-label="移动端导航" style="display:none;">
-        <ul>
-            <li><a href="index.html" title="南宁KTV首页">首页</a></li>
-            <li><a href="index.html#ktv-list" title="南宁KTV门店推荐">南宁KTV</a></li>
-            <li><a href="articles.html" title="南宁KTV行业资讯动态">最新资讯</a></li>
-            <li><a href="lianxiwomen.html" title="联系南宁KTV">联系我们</a></li>
-            <li><a href="partnership.html" title="南宁KTV商家合作热线">合作热线</a></li>
-        </ul>
-        <div class="nav-mobile-phone"><a href="tel:+8619968122123" class="phone-link" aria-label="拨打预订热线：199-6812-2123" title="联系我们"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img"><title>电话图标</title><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg><span class="phone-number">199-6812-2123</span></a></div>
-    </nav>
+
 
     <!-- ===========================================
          文章详情主体
@@ -239,28 +244,36 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <h3>南宁商务场KTV</h3>
-                    <p>南宁本地KTV信息平台，覆盖游戏场、商务场、高端量贩场、花场四大分区KTV推荐。</p>
+                    <h3>南宁商务KTV</h3>
+                    <p>南宁商务KTV是专注南宁地区的KTV信息与预订平台，覆盖游戏场、商务场、高端量贩场、花场四大业态。我们深入南宁各大KTV门店实地采集信息——包厢实景、低消标准、套餐内容一目了然，让您足不出户即可对比筛选，找到最合适的欢唱场所。无论是朋友聚会、商务洽谈还是品质夜生活，南宁商务KTV帮您一站式解决。</p>
                     <p style="margin-top:12px;">预订热线：<span class="phone-number" style="color:rgba(255,255,255,0.8);pointer-events:none;">19968122123</span></p>
                 </div>
                 <div class="footer-links">
                     <h4>快速导航</h4>
                     <ul>
                         <li><a href="index.html" title="南宁KTV首页">首页</a></li>
-                        <li><a href="index.html#ktv-list" title="南宁KTV门店推荐">南宁KTV</a></li>
+                        <li><a href="index.html#section-title" title="南宁KTV门店推荐">南宁KTV</a></li>
                         <li><a href="articles.html" title="南宁KTV行业资讯动态">最新资讯</a></li>
                         <li><a href="partnership.html" title="南宁KTV商家合作热线">合作热线</a></li>
+                        <li><a href="recruitment.html" title="南宁KTV招聘">招聘</a></li>
                     </ul>
                 </div>
                 <div class="footer-qr">
-                    <h4>联系我们</h4>
-                    <div class="qr-img"><img src="img/wx.png" alt="南宁KTV微信公众号" width="140" height="140" class="qr-longpress"></div>
-                    <p class="qr-hint">长按识别添加好友</p>
-                    <p style="font-size:0.95rem;color:rgba(255,255,255,0.85);margin-top:8px;font-weight:600;">联系我们<br>19968122123</p>
+                    <div class="qr-item">
+                        <h4>预定联系</h4>
+                        <div class="qr-img"><img src="img/wx.png" alt="南宁商务KTV预定微信" width="140" height="140" class="qr-longpress"></div>
+                        <p class="qr-hint">长按识别添加好友</p>
+                        <p style="font-size:0.95rem;color:rgba(255,255,255,0.85);margin-top:8px;font-weight:600;">预定联系<br>19968122123</p>
+                    </div>
+                    <div class="qr-item">
+                        <h4>招聘联系</h4>
+                        <div class="qr-img"><img src="img/zp.png" alt="南宁商务KTV招聘微信" width="140" height="140" class="qr-longpress"></div>
+                        <p class="qr-hint">长按识别添加好友</p>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 南宁KTV 信息平台. 保留所有权利.</p>
+                <p>&copy; 本站图片、门店数据信息均归本站所有，未经允许不得转载。 | 2026 南宁商务KTV预订. 保留所有权利. | <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer" style="color:inherit;">桂ICP备2025066740号-6</a></p>
             </div>
         </div>
     </footer>
@@ -282,6 +295,7 @@
             </div>
         </div>
     </div>
+
 
     <nav class="bottom-nav" aria-label="底部导航">
         <ul class="bottom-nav-list">
@@ -315,11 +329,15 @@
                     <span class="bottom-nav-label">合作</span>
                 </a>
             </li>
+            <li>
+                <a href="recruitment.html" class="bottom-nav-item" data-page="recruitment">
+                    <span class="bottom-nav-icon">💼</span>
+                    <span class="bottom-nav-label">招聘</span>
+                </a>
+            </li>
         </ul>
     </nav>
 
 <script src="js/article-detail.js" defer></script>
-<script src="js/search.js" defer></script>
-
 </body>
 </html>

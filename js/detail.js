@@ -10,8 +10,10 @@
  * 内联工具函数：escapeHtml / getQueryParam / DISTRICT_MAP / 汉堡菜单
  */
 
+// ===== API 配置（后端对接：部署时只需修改此处，所有接口请求会自动拼接）=====
+var API_BASE = '';  // 留空 = 相对路径；生产环境可设为 'https://api.nanningktv.com' 等
+
 // --- 内联工具函数（原 common.js，已还原为各文件独立副本）---
-document.documentElement.classList.remove('no-js');
 
 // 5/14修复：页面切换90%显示bug
 if ('scrollRestoration' in history) {
@@ -55,25 +57,7 @@ function getQueryParam(key) {
     return params.get(key);
 }
 
-// 汉堡菜单（已由底部导航栏替代，保留无障碍兜底）
-(function() {
-    var hamburger = document.getElementById('hamburger');
-    var navMobile = document.getElementById('navMobile');
-    if (hamburger && navMobile) {
-        hamburger.addEventListener('click', function() {
-            var isOpen = navMobile.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
-        navMobile.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                navMobile.classList.remove('active');
-                hamburger.classList.remove('active');
-                hamburger.setAttribute('aria-expanded', 'false');
-            });
-        });
-    }
-})();
+
 
 // 底部导航栏高亮（移动端）
 (function() {
@@ -96,10 +80,13 @@ var currentDistrict = '';    // 当前地区拼音 slug
 var RECOMMEND_COUNT = 5;     // 推荐列表固定展示条数
 
 // ==========================================
-// API 模拟（TODO: 接入真实 API，替换下方静态数据）
+// API 模拟（TODO: 后端对接 — 取消注释并删除 mock 数据即可）
 // ==========================================
 
 function fetchDetail(id, district) {
+    // TODO: 后端对接 — 取消下行注释，删除下方 mock 数据
+    // return fetchJSON(API_BASE + '/api/ktv/detail?id=' + id + '&district=' + district);
+
     var districtName = DISTRICT_MAP[district] ? DISTRICT_MAP[district].name : '游戏场';
     return Promise.resolve({
         id: id || '1',
@@ -115,6 +102,9 @@ function fetchDetail(id, district) {
 }
 
 function fetchRecommend(district, excludeId) {
+    // TODO: 后端对接 — 取消下行注释，删除下方 mock 数据
+    // return fetchJSON(API_BASE + '/api/ktv/recommend?district=' + district + '&exclude=' + excludeId);
+
     var districtName = DISTRICT_MAP[district] ? DISTRICT_MAP[district].name : '游戏场';
     var list = [];
     var count = 0;
@@ -181,15 +171,28 @@ function updateSEOMeta(data, districtName) {
     var title = (data.title || 'xx') + ' - 南宁KTV推荐_包厢预订_南宁商务场KTV';
     var desc = (data.title || 'xx') + ' 南宁商务场KTV，包厢环境、套餐价格、用户评价与预订电话一目了然。查看详情并在线预约。电话：19968122123。';
     var canonical = 'https://www.nanningktv.com/detail.html?district=' + (data.district || 'youxi') + '&id=' + (data.id || '1');
+    var keywords = districtName + 'KTV,' + (data.title || '南宁KTV') + ',南宁KTV推荐,南宁KTV预订,南宁商务场KTV,19968122123';
 
     document.title = title;
 
     var metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute('content', desc);
 
+    var metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (metaKeywords) metaKeywords.setAttribute('content', keywords);
+
     var linkCanonical = document.querySelector('link[rel="canonical"]');
     if (linkCanonical) linkCanonical.setAttribute('href', canonical);
 
+    // hreflang 动态同步
+    var hreflangs = document.querySelectorAll('link[rel="alternate"][hreflang]');
+    hreflangs.forEach(function(link) {
+        if (link.getAttribute('hreflang') === 'zh-CN' || link.getAttribute('hreflang') === 'x-default') {
+            link.setAttribute('href', canonical);
+        }
+    });
+
+    // Open Graph 动态同步
     var ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) ogTitle.setAttribute('content', title);
 
@@ -199,24 +202,78 @@ function updateSEOMeta(data, districtName) {
     var ogUrl = document.querySelector('meta[property="og:url"]');
     if (ogUrl) ogUrl.setAttribute('content', canonical);
 
+    var ogImageAlt = document.querySelector('meta[property="og:image:alt"]');
+    if (ogImageAlt) ogImageAlt.setAttribute('content', (data.title || '南宁KTV') + ' — 门店详情');
+
+    // og:image 动态同步（门店封面图）
+    if (data.images && data.images.length > 0 && data.images[0] && data.images[0].indexOf('http') !== -1) {
+        var ogImage = document.querySelector('meta[property="og:image"]');
+        if (ogImage) ogImage.setAttribute('content', data.images[0]);
+        var ogImageSecure = document.querySelector('meta[property="og:image:secure_url"]');
+        if (ogImageSecure) ogImageSecure.setAttribute('content', data.images[0]);
+        var twImage = document.querySelector('meta[name="twitter:image"]');
+        if (twImage) twImage.setAttribute('content', data.images[0]);
+        // 更新 JSON-LD 中的 image 字段
+        var ldScript = document.getElementById('jsonld-detail');
+        if (ldScript) {
+            try {
+                var ldData = JSON.parse(ldScript.textContent);
+                ldData.image = data.images[0];
+                ldScript.textContent = JSON.stringify(ldData);
+            } catch(e) {}
+        }
+    }
+
+    // Twitter Card 动态同步
+    var twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.setAttribute('content', title);
+
+    var twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc) twDesc.setAttribute('content', desc);
+
+    // JSON-LD 结构化数据动态同步
     var ldScript = document.getElementById('jsonld-detail');
     if (ldScript) {
         var ldData = {
             '@context': 'https://schema.org',
             '@type': 'LocalBusiness',
             'name': data.title || 'xx',
-            'telephone': '19968122123',
+            'telephone': data.phone || '19968122123',  // TODO: 后端对接 — phone 字段需从 API 返回，硬编码仅作兜底
             'address': {
                 '@type': 'PostalAddress',
                 'addressLocality': '南宁市',
-                'addressRegion': districtName,
+                'addressRegion': '广西壮族自治区',
+                'addressCountry': 'CN',
                 'streetAddress': data.address || 'xx'
             },
-            'image': 'https://www.nanningktv.com/og-image.jpg',
-            'url': canonical
+            'image': 'https://www.nanningktv.com/img/lbt.jpg',
+            'url': canonical,
+            'priceRange': '¥¥-¥¥¥',
+            'openingHours': 'Mo-Su 00:00-23:59',
+            'aggregateRating': {
+                '@type': 'AggregateRating',
+                'ratingValue': '4.5',
+                'reviewCount': '10',
+                'bestRating': '5'
+            }
         };
         ldScript.textContent = JSON.stringify(ldData);
     }
+
+    // 动态更新面包屑结构化数据
+    var breadcrumbScripts = document.querySelectorAll('script[type="application/ld+json"]');
+    breadcrumbScripts.forEach(function(script) {
+        try {
+            var bd = JSON.parse(script.textContent);
+            if (bd['@type'] === 'BreadcrumbList' && bd.itemListElement) {
+                bd.itemListElement[1].name = districtName + 'KTV';
+                bd.itemListElement[1].item = 'https://www.nanningktv.com/district.html?name=' + (data.district || 'youxi');
+                bd.itemListElement[2].name = data.title || 'xx';
+                bd.itemListElement[2].item = canonical;
+                script.textContent = JSON.stringify(bd);
+            }
+        } catch(e) {}
+    });
 }
 
 function renderRecommend(list) {

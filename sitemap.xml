@@ -1,57 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.nanningktv.com/</loc>
-    <lastmod>2026-05-16</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>南宁KTV预订平台</image:title>
+      <image:caption>南宁商务场KTV推荐</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.nanningktv.com/district.html?name=youxi</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/district.html?name=youxi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/district.html?name=youxi"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>南宁游戏场KTV推荐</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.nanningktv.com/district.html?name=shangwu</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/district.html?name=shangwu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/district.html?name=shangwu"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>南宁商务场KTV推荐</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.nanningktv.com/district.html?name=gaoduanliangfan</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/district.html?name=gaoduanliangfan"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/district.html?name=gaoduanliangfan"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>南宁高端量贩场KTV推荐</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.nanningktv.com/district.html?name=huachang</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/district.html?name=huachang"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/district.html?name=huachang"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>南宁花场KTV推荐</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.nanningktv.com/articles.html</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/articles.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/articles.html"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>南宁KTV资讯与优惠活动</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.nanningktv.com/lianxiwomen.html</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/lianxiwomen.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/lianxiwomen.html"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>联系南宁KTV</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.nanningktv.com/partnership.html</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/partnership.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/partnership.html"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>南宁KTV加盟合作</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://www.nanningktv.com/cooperation.html</loc>
-    <lastmod>2026-05-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://www.nanningktv.com/recruitment.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/recruitment.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/recruitment.html"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>南宁KTV高薪招聘</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.nanningktv.com/article-detail.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/article-detail.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/article-detail.html"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>南宁KTV资讯详情</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.nanningktv.com/detail.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.nanningktv.com/detail.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nanningktv.com/detail.html"/>
+    <image:image>
+      <image:loc>https://www.nanningktv.com/img/lbt.jpg</image:loc>
+      <image:title>南宁KTV门店详情</image:title>
+    </image:image>
   </url>
 </urlset>

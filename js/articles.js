@@ -8,8 +8,10 @@
  * 内联工具函数：escapeHtml / 汉堡菜单
  */
 
+// ===== API 配置（后端对接：部署时只需修改此处，所有接口请求会自动拼接）=====
+var API_BASE = '';  // 留空 = 相对路径；生产环境可设为 'https://api.nanningktv.com' 等
+
 // --- 内联工具函数（原 common.js，已还原为各文件独立副本）---
-document.documentElement.classList.remove('no-js');
 
 // 5/14修复：页面切换90%显示bug
 if ('scrollRestoration' in history) {
@@ -27,25 +29,7 @@ function escapeHtml(str) {
         .replace(/'/g, '&#39;');
 }
 
-// 汉堡菜单（已由底部导航栏替代，保留无障碍兜底）
-(function() {
-    var hamburger = document.getElementById('hamburger');
-    var navMobile = document.getElementById('navMobile');
-    if (hamburger && navMobile) {
-        hamburger.addEventListener('click', function() {
-            var isOpen = navMobile.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
-        navMobile.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                navMobile.classList.remove('active');
-                hamburger.classList.remove('active');
-                hamburger.setAttribute('aria-expanded', 'false');
-            });
-        });
-    }
-})();
+
 
 // 底部导航栏高亮（移动端）
 (function() {
@@ -60,10 +44,13 @@ function escapeHtml(str) {
 })();
 
 // ==========================================
-// 数据模拟（TODO: 接入真实 API，替换下方静态数据）
+// 数据模拟（TODO: 后端对接 — 取消注释并删除 mock 数据即可）
 // ==========================================
 
 function fetchArticles(page, pageSize) {
+    // TODO: 后端对接 — 取消下行注释，删除下方 mock 数据
+    // return fetchJSON(API_BASE + '/api/articles?type=news&page=' + page + '&pageSize=' + pageSize);
+
     var totalMock = 23;
     var list = [];
     var start = (page - 1) * pageSize;

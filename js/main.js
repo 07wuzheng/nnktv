@@ -12,73 +12,175 @@
  * 内联工具函数：escapeHtml / fetchJSON / DISTRICT_MAP / 汉堡菜单
  * ========================================== */
 
+// ===== API 配置（后端对接：部署时只需修改此处，所有接口请求会自动拼接）=====
+var API_BASE = '';  // 留空 = 相对路径；生产环境可设为 'https://api.nanningktv.com' 等
+
 // 四大分区：游戏场 / 商务场 / 高端量贩场 / 花场
 
 // --- 内联工具函数（原 common.js，已还原为各文件独立副本）---
-document.documentElement.classList.remove('no-js');
 
-// --- 轮播图逻辑 ---
+// --- 轮播图逻辑（API 动态加载 + 静态兜底） ---
 (function() {
     var carousel = document.getElementById('bannerCarousel');
     if (!carousel) return;
 
-    var slides = carousel.querySelectorAll('.carousel-slide');
-    var dots = carousel.querySelectorAll('.dot');
-    var prevBtn = carousel.querySelector('.carousel-prev');
-    var nextBtn = carousel.querySelector('.carousel-next');
-    var current = 0;
-    var total = slides.length;
-    var timer = null;
+    // TODO: 后端对接 — 将 'api/banners.json' 改为 API_BASE + '/api/banners'
+    var BANNER_API = 'api/banners.json';
 
-    function goTo(index) {
-        slides[current].classList.remove('active');
-        dots[current].classList.remove('active');
-        current = (index + total) % total;
-        slides[current].classList.add('active');
-        dots[current].classList.add('active');
+    /**
+     * 从 API 加载轮播图数据
+     * 接口返回格式：
+     * {
+     *   "code": 0,
+     *   "message": "success",
+     *   "data": [
+     *     { "id": 1, "image": "xxx.jpg", "alt": "描述", "link": "", "sort": 1, "status": 1 }
+     *   ]
+     * }
+     * - image: 图片地址（必填）
+     * - alt: 图片alt文字（必填，SEO）
+     * - link: 点击跳转链接（选填，空则不跳转）
+     * - sort: 排序权重，越小越前
+     * - status: 1=启用 0=禁用
+     */
+    function fetchBanners() {
+        fetch(BANNER_API)
+            .then(function(res) { return res.json(); })
+            .then(function(json) {
+                if (json.code === 0 && json.data && json.data.length > 0) {
+                    var banners = json.data
+                        .filter(function(b) { return b.status === 1; })
+                        .sort(function(a, b) { return (a.sort || 0) - (b.sort || 0); });
+                    if (banners.length > 0) {
+                        renderCarousel(banners);
+                    }
+                }
+            })
+            .catch(function(err) {
+                // API 请求失败，保留 HTML 中的静态轮播图作为兜底
+                console.warn('[Banner] API加载失败，使用静态轮播图:', err.message);
+                initCarousel();
+            });
     }
 
-    function next() { goTo(current + 1); }
-    function prev() { goTo(current - 1); }
+    /**
+     * 根据 API 数据动态渲染轮播图
+     */
+    function renderCarousel(banners) {
+        var slidesContainer = carousel.querySelector('.carousel-slides');
+        var dotsContainer = carousel.querySelector('.carousel-dots');
 
-    function startAuto() {
-        stopAuto();
-        timer = setInterval(next, 4000);
-    }
+        // 清空现有幻灯片和指示点
+        slidesContainer.innerHTML = '';
+        dotsContainer.innerHTML = '';
 
-    function stopAuto() {
-        if (timer) { clearInterval(timer); timer = null; }
-    }
+        banners.forEach(function(banner, index) {
+            // 创建幻灯片
+            var slide = document.createElement('div');
+            slide.className = 'carousel-slide' + (index === 0 ? ' active' : '');
 
-    prevBtn.addEventListener('click', function() { prev(); startAuto(); });
-    nextBtn.addEventListener('click', function() { next(); startAuto(); });
+            var img = document.createElement('img');
+            img.src = banner.image;
+            img.alt = banner.alt || '轮播图';
+            img.loading = index === 0 ? 'eager' : 'lazy';
 
-    dots.forEach(function(dot) {
-        dot.addEventListener('click', function() {
-            goTo(parseInt(this.getAttribute('data-index')));
-            startAuto();
+            // 如果有链接，包裹 a 标签
+            if (banner.link) {
+                var a = document.createElement('a');
+                a.href = banner.link;
+                a.title = banner.alt || '';
+                a.appendChild(img);
+                slide.appendChild(a);
+            } else {
+                slide.appendChild(img);
+            }
+
+            slidesContainer.appendChild(slide);
+
+            // 创建指示点
+            var dot = document.createElement('span');
+            dot.className = 'dot' + (index === 0 ? ' active' : '');
+            dot.setAttribute('data-index', index);
+            dotsContainer.appendChild(dot);
         });
-    });
 
-    carousel.addEventListener('mouseenter', stopAuto);
-    carousel.addEventListener('mouseleave', startAuto);
+        // 初始化轮播交互
+        initCarousel();
+    }
 
-    // 触摸滑动支持
-    var touchStartX = 0;
-    carousel.addEventListener('touchstart', function(e) {
-        touchStartX = e.changedTouches[0].clientX;
-        stopAuto();
-    }, { passive: true });
+    /**
+     * 初始化轮播交互逻辑（绑定事件 + 自动播放）
+     */
+    function initCarousel() {
+        var slides = carousel.querySelectorAll('.carousel-slide');
+        var dots = carousel.querySelectorAll('.dot');
+        var prevBtn = carousel.querySelector('.carousel-prev');
+        var nextBtn = carousel.querySelector('.carousel-next');
+        var current = 0;
+        var total = slides.length;
+        var timer = null;
 
-    carousel.addEventListener('touchend', function(e) {
-        var diff = e.changedTouches[0].clientX - touchStartX;
-        if (Math.abs(diff) > 50) {
-            diff > 0 ? prev() : next();
+        if (total === 0) return;
+
+        function goTo(index) {
+            slides[current].classList.remove('active');
+            dots[current].classList.remove('active');
+            current = (index + total) % total;
+            slides[current].classList.add('active');
+            dots[current].classList.add('active');
         }
-        startAuto();
-    }, { passive: true });
 
-    startAuto();
+        function nextSlide() { goTo(current + 1); }
+        function prevSlide() { goTo(current - 1); }
+
+        function startAuto() {
+            stopAuto();
+            timer = setInterval(nextSlide, 4000);
+        }
+
+        function stopAuto() {
+            if (timer) { clearInterval(timer); timer = null; }
+        }
+
+        // 移除旧事件（防止重复绑定）
+        var newPrev = prevBtn.cloneNode(true);
+        var newNext = nextBtn.cloneNode(true);
+        prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+        nextBtn.parentNode.replaceChild(newNext, nextBtn);
+
+        newPrev.addEventListener('click', function() { prevSlide(); startAuto(); });
+        newNext.addEventListener('click', function() { nextSlide(); startAuto(); });
+
+        dots.forEach(function(dot) {
+            dot.addEventListener('click', function() {
+                goTo(parseInt(this.getAttribute('data-index')));
+                startAuto();
+            });
+        });
+
+        carousel.addEventListener('mouseenter', stopAuto);
+        carousel.addEventListener('mouseleave', startAuto);
+
+        // 触摸滑动支持
+        var touchStartX = 0;
+        carousel.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].clientX;
+            stopAuto();
+        }, { passive: true });
+
+        carousel.addEventListener('touchend', function(e) {
+            var diff = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(diff) > 50) {
+                diff > 0 ? prevSlide() : nextSlide();
+            }
+            startAuto();
+        }, { passive: true });
+
+        startAuto();
+    }
+
+    // 启动：先尝试 API 加载，失败则使用静态 HTML
+    fetchBanners();
 })();
 
 // 5/14修复：页面切换90%显示bug — 禁用浏览器滚动位置恢复，强制回到顶部
@@ -124,25 +226,7 @@ function getQueryParam(key) {
     return params.get(key);
 }
 
-// 汉堡菜单（已由底部导航栏替代，保留无障碍兜底）
-(function() {
-    var hamburger = document.getElementById('hamburger');
-    var navMobile = document.getElementById('navMobile');
-    if (hamburger && navMobile) {
-        hamburger.addEventListener('click', function() {
-            var isOpen = navMobile.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
-        navMobile.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                navMobile.classList.remove('active');
-                hamburger.classList.remove('active');
-                hamburger.setAttribute('aria-expanded', 'false');
-            });
-        });
-    }
-})();
+
 
 // 底部导航栏高亮（移动端）
 (function() {
@@ -152,7 +236,7 @@ function getQueryParam(key) {
     var page = 'index'; // 默认首页
 
     // 首页但 hash 指向热门KTV门店区域，高亮 KTV
-    if (hash === '#featuredStores' || hash === '#ktv-list') {
+    if (hash === '#featuredStores' || hash === '#section-title' || hash === '#ktv-list') {
         page = 'ktv';
     } else if (path.indexOf('articles') !== -1) {
         page = 'articles';
@@ -188,11 +272,11 @@ function getQueryParam(key) {
             var isIndex = path.indexOf('index') !== -1 || path === '/' || path.endsWith('/');
             if (isIndex) {
                 e.preventDefault();
-                var target = document.getElementById('featuredStores');
+                var target = document.getElementById('section-title');
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     // 更新 URL hash
-                    history.replaceState(null, '', '#featuredStores');
+                    history.replaceState(null, '', '#section-title');
                     // 重新高亮底部导航
                     document.querySelectorAll('.bottom-nav-item').forEach(function(item) {
                         item.classList.remove('active');
@@ -261,8 +345,8 @@ async function loadSiteTitle() {
  * 后端统一返回此字段，首页卡片、地区列表页卡片、详情页主图共用同一个 cover URL
  */
 function fetchFeaturedStores() {
-    // TODO: 接入真实 API，替换下方静态数据
-    // return fetchJSON('/api/ktv/featured?limit=8');
+    // TODO: 后端对接 — 取消下行注释，删除下方 mock 数据
+    // return fetchJSON(API_BASE + '/api/ktv/featured?limit=8');
 
     // 模拟数据：4 个分区各 1-2 家门店，共 8 家
     // 排序逻辑：按每个分区最新上传的门店优先展示（create_time DESC）
@@ -341,8 +425,8 @@ async function loadFeaturedStores() {
  * 真实接口：GET /api/articles?type=news&limit=3
  */
 function fetchArticles() {
-    // TODO: 接入真实 API
-    // return fetchJSON('/api/articles?type=news&limit=3');
+    // TODO: 后端对接 — 取消下行注释，删除下方 mock 数据
+    // return fetchJSON(API_BASE + '/api/articles?type=news&limit=3');
 
     var mockList = [
         { id: 1, title: '南宁游戏场KTV新开业优惠活动', thumbnail: '', seo_keywords: '南宁KTV,游戏场KTV,优惠活动', author: '南宁KTV', create_time: '2026-05-10 14:30:00', update_time: '2026-05-10 14:30:00', status: 1 },
@@ -419,7 +503,8 @@ async function loadArticles() {
 // 4. 加载联系电话
 // ==========================================
 async function loadContact() {
-    const data = await fetchJSON('/api/contact');
+    // TODO: 后端对接 — 接口就绪后自动生效，无需改动；硬编码电话 19968122123 见 index.html
+    const data = await fetchJSON(API_BASE + '/api/contact');
 
     if (data && data.phone) {
         const phoneLinks = document.querySelectorAll('.phone-number');
@@ -446,8 +531,8 @@ async function loadContact() {
  * 接通后端后，取消下方 fetchJSON 的注释即可
  */
 async function loadDistrictCovers() {
-    // TODO: 接入真实 API
-    // const data = await fetchJSON('/api/ktv/first-store-covers');
+    // TODO: 后端对接 — 取消下方注释，启用真实 API
+    // const data = await fetchJSON(API_BASE + '/api/ktv/first-store-covers');
     // if (!data) return;
     //
     // document.querySelectorAll('.district-home-card[data-district-slug]').forEach(card => {

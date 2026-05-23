@@ -3,36 +3,34 @@
 
 User-agent: *
 Allow: /
-Disallow: /api/
+# 禁止抓取内部文档和开发目录
+Disallow: /wy/
+Disallow: /claude-seo/
+Disallow: /docs/
 
 # 百度蜘蛛优化
 User-agent: Baiduspider
 Allow: /
-Disallow: /api/
 Crawl-delay: 1
 
 # Google 蜘蛛优化
 User-agent: Googlebot
 Allow: /
-Disallow: /api/
 Crawl-delay: 0
 
 # 360 搜索
 User-agent: 360Spider
 Allow: /
-Disallow: /api/
 Crawl-delay: 1
 
 # 搜狗蜘蛛
 User-agent: Sogou web spider
 Allow: /
-Disallow: /api/
 Crawl-delay: 1
 
 # 神马蜘蛛（移动搜索）
 User-agent: YisouSpider
 Allow: /
-Disallow: /api/
 Crawl-delay: 1
 
 # AI 爬虫（允许抓取以提升 AI 搜索可见性）
@@ -50,6 +48,13 @@ Allow: /
 
 User-agent: PerplexityBot
 Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+Crawl-delay: 1
 
 # Sitemap 地址
 Sitemap: https://www.nanningktv.com/sitemap.xml
